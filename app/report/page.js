@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Sidebar from "../components/Sidebar";
+import { Menu, X } from "lucide-react";
+
 
 export default function Reports() {
   const { data: session, status } = useSession();
@@ -14,6 +16,7 @@ export default function Reports() {
   const [selectedYear, setSelectedYear] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
+  
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -51,9 +54,18 @@ export default function Reports() {
 
   return (
     <div className="min-h-screen flex bg-gray-100">
-      <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen((prev) => !prev)} />
+    
+  <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen((prev) => !prev)} />
+
+      {/* Mobile menu button */}
+      <div className="md:hidden fixed top-4 left-4 z-50">
+        <button onClick={() => setIsSidebarOpen((prev) => !prev)} className="text-blue-600" aria-label="Toggle Sidebar">
+          {isSidebarOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+      </div>
+      
       <main className="flex-1 p-6">
-        <h1 className="text-3xl font-bold text-gray-800">Reports</h1>
+<h1 className="text-3xl font-bold text-gray-800 text-center md:text-left">Reports</h1>
 
         {view === "years" && (
           <div className="grid grid-cols-4 gap-4 mt-4">

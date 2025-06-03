@@ -7,7 +7,7 @@ export async function POST(req) {
   try {
     const { email, password } = await req.json();
     await connectDB();
-
+  
     // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {

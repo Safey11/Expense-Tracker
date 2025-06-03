@@ -2,16 +2,20 @@
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import Link from "next/link";
+import Sidebar from "../components/Sidebar";
+import { Trash2, Edit, Check, X, Menu } from "lucide-react";
+
 
 export default function AddExpense() {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar toggle
+
   const { data: session } = useSession();
   const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     value: "",
     category: "",
-    date: new Date().toISOString().split("T")[0], // Default to today's date
+    date: new Date().toISOString().split("T")[0],
   });
 
   const handleChange = (e) => {
@@ -45,46 +49,26 @@ export default function AddExpense() {
     }
   };
 
-  const menuItems = [
-    { label: "Dashboard", path: "/dashboard" },
-    { label: "Expense", path: "/expense" },
-    { label: "Add Expense", path: "/add-expense" },
-    { label: "Import CSV File", path: "/import-csv" },
-    { label: "Report", path: "/report" },
-    { label: "Profile - User", path: "/profile" },
-  ];
+    const toggleSidebar = () => setIsSidebarOpen((prev) => !prev); // Toggle function for sidebar
+
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-gray-100">
+    <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
-      <aside className="fixed md:static w-64 bg-blue-600 text-white min-h-screen p-6">
-        <h2 className="text-2xl font-bold">Expense Tracker</h2>
-        <nav className="mt-4">
-          <ul className="space-y-3">
-            {menuItems.map(({ label, path }, index) => (
-              <li key={index}>
-                <Link href={path} className="block p-2 hover:bg-blue-700 rounded">
-                  {label}
-                </Link>
-              </li>
-            ))}
-            <li>
-              <button
-                onClick={() => signOut()}
-                className="w-full text-left p-2 hover:bg-blue-700 rounded"
-              >
-                Log Out
-              </button>
-            </li>
-          </ul>
-        </nav>
-      </aside>
+       <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      
 
       {/* Main Content */}
-      <main className="flex-1 p-6">
-        <h1 className="text-3xl font-bold text-gray-800">Add Expense</h1>
-        <form onSubmit={handleSubmit} className="mt-6 bg-white p-6 rounded-lg shadow-md">
-          <div className="space-y-4">
+      <div className="flex-1 flex items-center justify-center p-6">
+      <div className="md:hidden fixed top-4 left-4 z-50">
+  <button onClick={toggleSidebar} className="text-blue-600" aria-label="Open Sidebar">
+    {isSidebarOpen ? <X size={28} /> : <Menu size={28} />}
+  </button>
+     </div>
+  
+        <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-lg">
+          <h1 className="text-3xl font-bold text-gray-800 mb-6">Add Expense</h1>
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">Expense Name</label>
               <input
@@ -131,9 +115,9 @@ export default function AddExpense() {
             >
               Add Expense
             </button>
-          </div>
-        </form>
-      </main>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
