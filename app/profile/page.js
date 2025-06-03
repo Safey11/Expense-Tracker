@@ -1,12 +1,16 @@
 "use client";
+
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Menu } from "lucide-react";
 import Sidebar from "../components/Sidebar";
+import Spinner from "../components/Spinner";
 
 export default function Profile() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -14,15 +18,25 @@ export default function Profile() {
     }
   }, [status, router]);
 
-  if (status === "loading") return <p className="text-center mt-10">Loading...</p>;
+  if (status === "loading") return   <Spinner />;
   if (!session) return null;
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev);
+  };
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gradient-to-tr from-gray-100 to-blue-50">
-      {/* Sidebar */}
-      <div className="w-full md:w-64 shadow-md bg-white">
-        <Sidebar />
+      {/* Topbar for mobile */}
+      <div className="md:hidden bg-blue-600 text-white p-4 flex justify-between items-center shadow-md">
+        <h2 className="text-xl font-semibold">Profile</h2>
+        <button onClick={toggleSidebar} aria-label="Open Sidebar">
+          <Menu size={28} />
+        </button>
       </div>
+
+      {/* Sidebar */}
+      <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
       {/* Profile Content */}
       <div className="flex-1 flex items-center justify-center p-6 md:p-10">

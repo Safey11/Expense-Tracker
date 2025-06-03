@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Sidebar from "../components/Sidebar";
 import { Menu, X } from "lucide-react";
+import Spinner from "../components/Spinner";
 
 
 export default function Reports() {
@@ -77,7 +78,8 @@ export default function Reports() {
               >
                 {year}
               </div>
-            )) : <p className="text-gray-500">No data available.</p>}
+            )) :   <Spinner />
+}
           </div>
         )}
 

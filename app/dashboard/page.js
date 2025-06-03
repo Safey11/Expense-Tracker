@@ -11,7 +11,7 @@ import {
 } from "recharts";
 import { Menu, X, Trash2, Pencil, LogOut } from "lucide-react";
 import Sidebar from "../components/Sidebar";
-
+import Spinner from "../components/Spinner";
 export default function Dashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -164,7 +164,7 @@ export default function Dashboard() {
       <h2 className="text-xl font-semibold mb-4">Recent Transactions</h2>
 
       {loading ? (
-        <p className="text-center text-gray-500">Loading...</p>
+       <Spinner />
       ) : error ? (
         <p className="text-center text-red-500">{error}</p>
       ) : (
