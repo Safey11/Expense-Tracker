@@ -8,14 +8,38 @@ import { X, LogOut, FileText, User, PlusCircle, PieChart, Home } from "lucide-re
 export default function Sidebar({ isSidebarOpen, toggleSidebar }) {
   const pathname = usePathname();
 
-  const navItems = [
-    { label: "Dashboard", path: "/dashboard", icon: <Home size={18} /> },
-    { label: "Expense", path: "/expense", icon: <PieChart size={18} /> },
-    { label: "Add Expense", path: "/add-expense", icon: <PlusCircle size={18} /> },
-    { label: "Import CSV File", path: "/import-csv", icon: <FileText size={18} /> },
-    { label: "Report", path: "/report", icon: <FileText size={18} /> },
-    { label: "Profile - User", path: "/profile", icon: <User size={18} /> },
-  ];
+const navItems = [
+  // 🌟 Main
+  { label: "Dashboard", path: "/dashboard", icon: <Home size={18} /> },
+  { label: "Expense", path: "/expense", icon: <PieChart size={18} /> },
+  { label: "Add Expense", path: "/add-expense", icon: <PlusCircle size={18} /> },
+  { label: "Import CSV File", path: "/import-csv", icon: <FileText size={18} /> },
+
+  // 📆 Calendar & Recurring
+  { label: "Expense Calendar", path: "/calendar", icon: <FileText size={18} /> }, // future
+  { label: "Recurring Expenses", path: "/recurring", icon: <FileText size={18} /> }, // future
+
+  // 💡 Insights & Goals
+  { label: "Spending Insights", path: "/insights", icon: <PieChart size={18} /> }, // future
+  { label: "Savings Goals", path: "/goals", icon: <FileText size={18} /> }, // future
+
+  // 🧾 Reports
+  { label: "Reports", path: "/report", icon: <FileText size={18} /> },
+  { label: "Download Reports", path: "/report-download", icon: <FileText size={18} /> }, // future
+
+  // 🔔 Alerts & Settings
+  { label: "Notifications", path: "/notifications", icon: <FileText size={18} /> }, // future
+  { label: "Settings", path: "/settings", icon: <FileText size={18} /> }, // future
+
+  // 👤 Account & Sharing
+  { label: "Profile - User", path: "/profile", icon: <User size={18} /> },
+  { label: "Shared Expenses", path: "/shared", icon: <User size={18} /> }, // future
+  { label: "Refer & Earn", path: "/refer", icon: <User size={18} /> }, // future
+
+  // 🧪 Experimental / Labs
+  { label: "AI Insights (Beta)", path: "/ai-insights", icon: <PieChart size={18} /> }, // future
+];
+
 
   return (
     <aside
